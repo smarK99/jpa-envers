@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,6 +29,11 @@ public class Factura {
     private int total;
     @Column
     private String fecha;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "fk_detallesfactura")
+    @Builder.Default
+    private List<DetalleFactura> detallesFactura = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_cliente")
